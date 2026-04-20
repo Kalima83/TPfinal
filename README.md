@@ -3,7 +3,7 @@ Este repositorio contiene la documentación del TP final de la materia Programac
 
 ## Estructura
 TPF/
-├── Drivers/
+├── Drivers
 │   ├── API/                   <-- Capa de Abstracción (PdM)
 │   │   ├── Inc/
 │   │   │   ├── API_delay.h    <-- Gestión de tiempos no bloqueantes
