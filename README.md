@@ -16,7 +16,7 @@ TPF/
 │   │       ├── API_delay.c    <-- Implementación de retardos no bloqueantes (PdM)
 │   │       ├── API_lcd.c      <-- Lógica del LCD (PCSE)
 │   │       ├── API_mpu6050.c  <-- Lógica de procesamiento de ángulos (PCSE)
-│   │       ├── APILCD_port.c  <-- Driver I2C + Modo 4 bits (PdM)
+│   │       ├── APILCD_port.c  <-- Driver I2C + Modo 4 bits (PdM/PCSE)
 │   │       └── MPU_port.c     <-- Driver I2C: Lectura/Escritura Registros(PCSE)
 │   └── STM32F4xx_HAL_Driver/  <-- Capa de Hardware 
 ├── Core/
