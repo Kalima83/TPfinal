@@ -1,0 +1,6 @@
+../Drivers/API/src/APILCD_port.c:28:21:I2C_send	2
+../Drivers/API/src/APILCD_port.c:42:13:pulse_enable	1
+../Drivers/API/src/APILCD_port.c:52:6:LCD_port_write_cmd	1
+../Drivers/API/src/APILCD_port.c:61:6:LCD_port_write_data	1
+../Drivers/API/src/APILCD_port.c:70:6:LCD_port_delay	1
+../Drivers/API/src/APILCD_port.c:78:6:LCD_port_write_nibble	1

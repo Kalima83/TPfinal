@@ -1,0 +1,5 @@
+../Drivers/API/src/API_lcd.c:24:8:LCD_init	8	static
+../Drivers/API/src/API_lcd.c:51:6:LCD_write_string	16	static
+../Drivers/API/src/API_lcd.c:60:6:LCD_goto_xy	24	static
+../Drivers/API/src/API_lcd.c:77:6:LCD_mostrarDatosEnLCD	56	static
+../Drivers/API/src/API_lcd.c:92:6:LCD_clear	8	static

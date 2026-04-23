@@ -1,0 +1,3 @@
+../Drivers/API/src/API_uart_port.c:16:8:uartPortConfig	16	static
+../Drivers/API/src/API_uart_port.c:36:6:uartPortSend	16	static
+../Drivers/API/src/API_uart_port.c:42:8:uartPortReceiveByte	16	static

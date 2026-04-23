@@ -1,0 +1,2 @@
+../Drivers/API/src/MPU_port.c:16:8:MPU_port_write	32	static
+../Drivers/API/src/MPU_port.c:24:8:MPU_port_read	32	static
