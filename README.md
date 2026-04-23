@@ -22,6 +22,7 @@ TPF/
 ├── Drivers/
 │   ├── API/                        <-- Capa de Abstracción (PdM)
 │   │   ├── Inc/                    <-- Encabezados Públicos y Privados
+│   │   │   ├── API_debounce.h      <-- Control antirebote
 │   │   │   ├── API_delay.h         <-- Gestión de tiempos no bloqueantes
 │   │   │   ├── API_lcd.h           <-- Funciones de alto nivel del display
 │   │   │   ├── API_mpu6050.h       <-- Funciones de alto nivel de la IMU
@@ -30,6 +31,7 @@ TPF/
 │   │   │   ├── APILCD_port.h       <-- Interfaz de bajo nivel del LCD (PCSE)
 │   │   │   └── MPU_port.h          <-- Interfaz de bajo nivel de la IMU (PCSE)
 │   │   └── Src/                    <-- Implementación de Capas
+│   │       ├── API_debounce.h      <-- Control antirebote
 │   │       ├── API_delay.c         <-- Lógica de retardos y timers (PdM)
 │   │       ├── API_lcd.c           <-- Lógica de control del display (PdM)
 │   │       ├── API_mpu6050.c       <-- Procesamiento de datos de la IMU
