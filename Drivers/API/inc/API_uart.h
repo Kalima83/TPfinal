@@ -21,7 +21,8 @@ typedef bool bool_t;
 bool_t uartInit(uint32_t baudrate);
 
 /* mensajeria interna */
-void uartSendString(uint8_t * pstring);
+void uartSendString(uint8_t * pstring); // imprime por pantalla sin borrar
+void uartOverwriteLine(uint8_t * pstring); // imprime por pantalla borrando la linea
 
 /* comunicacion no bloqueante */
 bool_t uartReceiveByte(uint8_t * pByte);

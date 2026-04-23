@@ -11,4 +11,5 @@ void debounceFSM_init(void); //inicializa las variables
 void debounceFSM_update(void); //control del boton B1
 bool_t readKey(void); // Devuelve si se presionó y resetea la variable interna
 
+
 #endif /* API_INC_API_DEBOUNCE_H_ */

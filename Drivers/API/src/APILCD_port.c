@@ -41,9 +41,9 @@ static lcd_status_t I2C_send(uint8_t data) {
  */
 static void pulse_enable(uint8_t data) {
     I2C_send(data | PIN_EN);  // EN = 1
-    LCD_port_delay(1);
+    //LCD_port_delay(1); // da problema de latencia en el led
     I2C_send(data & ~PIN_EN); // EN = 0 (Flanco de bajada)
-    LCD_port_delay(1);
+    //LCD_port_delay(1); // da problema de latencia en el led
 }
 
 /**

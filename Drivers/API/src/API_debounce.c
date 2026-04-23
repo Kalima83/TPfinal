@@ -19,7 +19,7 @@ typedef enum {
 
 static debounceState_t state;
 static uint32_t time_push;
-static const uint32_t time = 40;
+static const uint32_t time = 20;
 static bool_t keyPressedFlag = false; // Variable global privada
 
 /************************ Fin definiciones privadas************************/
@@ -38,7 +38,7 @@ void debounceFSM_init()
 
 
 /*
- * La función readKey debe leer una variable interna del módulo y devolver true o false si la tecla fue presionada.
+ * La función readKey debe leer la variable interna del módulo y devolver true o false si la tecla fue presionada.
  * Si devuelve true, debe resetear (poner en false) el estado de la variable
  */
 bool_t readKey(void) {
@@ -61,6 +61,7 @@ void debounceFSM_update()
 	            if (isPressed) {
 	                state = BUTTON_FALLING;
 	                time_push = HAL_GetTick();
+	                buttonPressed();
 	            }
 	            break;
 

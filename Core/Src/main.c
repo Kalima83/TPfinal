@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include <math.h>
+#include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -55,6 +56,7 @@ UART_HandleTypeDef huart2;
 
 // --- Configuración ---
 uint32_t baudio_rate = 115200;
+uint32_t ang = 20;
 
 // --- Variables de la MEF ---
 estadoMEF_t estadoActual = ESTADO_INIT_CALIB;
@@ -122,9 +124,9 @@ int main(void)
   uartInit(baudio_rate);        // Inicia UART
   LCD_init();                   // Inicia LCD
   MPU6050_Init();               // Inicia Sensor
-  debounceFSM_init();
+  debounceFSM_init();			// cambios de estado del boton B1
   delayInit(&delayLCD, 200);     // Refresco de datos cada 200ms
-  delayInit(&delayAlerta, 10);  // Base para el parpadeo del LED
+  delayInit(&delayAlerta, 50);  // Base para el parpadeo del LED
 
   /* USER CODE END 2 */
 
@@ -285,8 +287,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -317,6 +318,8 @@ void actualizarMEF(bool_t flanco) {
             // calibración
         	LCD_goto_xy(0, 0);
         	LCD_write_string("Calibrando...   ");
+        	LCD_goto_xy(1, 0);
+        	LCD_write_string("No mover la IMU!!! ");
         	MPU6050_Calibrate();
         	estadoActual = ESTADO_IDLE;
         	LCD_clear();
@@ -332,7 +335,6 @@ void actualizarMEF(bool_t flanco) {
             if(flanco) {
                 estadoActual = ESTADO_READING;
                 uartSendString((uint8_t*) "Leyendo angulos de la IMU \r\n");
-                HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
                 LCD_clear();
             }
             break;
@@ -342,7 +344,7 @@ void actualizarMEF(bool_t flanco) {
         	if(flanco) {
         		uartSendString((uint8_t*)"Lectura de IMU detenida \r\n");
                 // Apaga el LED al salir
-                HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+        		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
                 estadoActual = ESTADO_IDLE;
                 break;
             }
@@ -350,21 +352,26 @@ void actualizarMEF(bool_t flanco) {
             // Usa el delay de la API_delay para leer cada 100ms
             if (delayRead(&delayLCD)) {
                MPU6050_Read_All(&accel);
-                // Lógica de Alarma (±45º)
-                if (fabsf(accel.angle_x) > 20.0f || fabsf(accel.angle_y) > 20.0f
-                	|| fabsf(accel.angle_x) < -20.0f || fabsf(accel.angle_y) < -20.0f) {
+               // Actualización de Interfaz
+               // Envia datos por uart
+               LCD_mostrarDatosEnLCD(accel.angle_x, accel.angle_y);
+
+               // Imprime por pantalla
+               char buffer_uart[50];
+               sprintf(buffer_uart, "X: %6.2f | Y: %6.2f", accel.angle_x, accel.angle_y);
+               uartOverwriteLine((uint8_t*)buffer_uart);
+            }
+               // Lógica de Alarma (±20°)
+                if (fabsf(accel.angle_x) > ang || fabsf(accel.angle_y) > ang) {
                     // Lógica de parpadeo progresivo del LED
                     actualizarAlarmaProgresiva(accel.angle_x, accel.angle_y);
                     }
                 	else {
                     // Si el ángulo es seguro, deja fijo el led
-                    HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+                	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
                 	}
-                // Actualización de Interfaz
-                // Envia datos por uart
-                LCD_mostrarDatosEnLCD(accel.angle_x, accel.angle_y);
-            }
-            break;
+             break;
+
         case ESTADO_ERROR:
         	LCD_clear();
         	LCD_goto_xy(0,0);
